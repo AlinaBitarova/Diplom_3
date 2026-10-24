@@ -10,8 +10,6 @@ import net.datafaker.Faker;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import java.util.Map;
-
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
 
