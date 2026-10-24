@@ -1,5 +1,6 @@
 package org.pageobjects;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,119 +17,119 @@ public class LoginPage {
     private WebDriverWait wait;
 
     //  Локатор формы Вход
-    private static final By loginForm = By.xpath("//div[@class='Auth_login__3hAey' and .//h2[text()='Вход']]");
+    private static final By LOGIN_FORM = By.xpath("//div[@class='Auth_login__3hAey' and .//h2[text()='Вход']]");
 
     // Поля входа
-    private static final By emailField = By.xpath(".//label[text()='Email']/following-sibling::input");
-    private static final By passwordField = By.xpath(".//label[text()='Пароль']/following-sibling::input");
+    private static final By EMAIL_FIELD = By.xpath(".//label[text()='Email']/following-sibling::input");
+    private static final By PASSWORD_FIELD = By.xpath(".//label[text()='Пароль']/following-sibling::input");
 
     // Кнопка Войти
-    private static final By loginButton = By.xpath(".//*[text()='Войти']");
+    private static final By LOGIN_BUTTON = By.xpath(".//*[text()='Войти']");
 
     // Кнопка Зарегистрироваться
-    private static final By registerButton = By.cssSelector("a[href='/register']");
+    private static final By REGISTER_BUTTON = By.cssSelector("a[href='/register']");
 
     // Кнопка Восстановить пароль
-    private static final By restoreThePasswordButton = By.cssSelector("a[href='/forgot-password']");
+    private static final By RESTORE_THE_PASSWORD_BUTTON = By.cssSelector("a[href='/forgot-password']");
 
     // Окно Восстановить пароль
-    private static final By restoreThePasswordWindow = By.xpath("//div[contains(@class, 'Auth_login') and .//h2[text()='Восстановление пароля']]");
+    private static final By RESTORE_THE_PASSWORD_WINDOW = By.xpath("//div[contains(@class, 'Auth_login') and .//h2[text()='Восстановление пароля']]");
 
     // Кнопка Войти окна Всстановить пароль
-    private static final By signInAtRestoreThePasswordWindowButton = By.xpath(".//*[text()='Войти']");
+    private static final By SIGN_IN_AT_RESTORE_THE_PASSWORD_WINDOW_BUTTON = By.xpath(".//*[text()='Войти']");
 
     //  Локатор главной страницы
-    private static final By mainPage = By.id("root");
+    private static final By MAIN_PAGE = By.id("root");
 
     // Кнопка Личный кабинет
-    private static final By myAccountButton = By.xpath(".//p[contains(text(),'Личный Кабинет')]");
+    private static final By MY_ACCOUNT_BUTTON = By.xpath(".//p[contains(text(),'Личный Кабинет')]");
 
     // Локаторы личного кабинета
-    private final By profileFormContainer = By.xpath(".//div[contains(@class, 'Profile_profile')] | .//form");
-    private final By profileName = By.xpath(".//label[text()='Имя']/following-sibling::input");
-    private final By profileEmail = By.xpath(".//label[text()='Логин']/following-sibling::input");
+    private final By PROFILE_FORM_CONTAINER = By.xpath(".//div[contains(@class, 'Profile_profile')] | .//form");
+    private final By PROFILE_NAME = By.xpath(".//label[text()='Имя']/following-sibling::input");
+    private final By PROFILE_EMAIL = By.xpath(".//label[text()='Логин']/following-sibling::input");
 
     // Кнопка Выйти
-    private final By logOutButton = By.xpath(".//button[contains(text(), 'Выход')]");
+    private final By LOGOUT_BUTTON = By.xpath(".//button[contains(text(), 'Выход')]");
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    // Дождаться, пока страница входа загрузится
+    @Step("Wait for Login page to load")
     public void waitForLoginPageToLoad() {
-        wait.until(visibilityOfElementLocated(loginForm));
+        wait.until(visibilityOfElementLocated(LOGIN_FORM));
     }
 
-    // Ввести данные в поле Email
+    @Step("Fill Email field")
     public void setEmail(String email) {
-        driver.findElement(emailField).sendKeys(email);
+        driver.findElement(EMAIL_FIELD).sendKeys(email);
     }
 
-    // Ввести данные в поле Пароль
+    @Step("Fill Password field")
     public void setPassword(String password) {
-        driver.findElement(passwordField).sendKeys(password);
+        driver.findElement(PASSWORD_FIELD).sendKeys(password);
     }
 
-    // Нажать на кнопку Войти
+    @Step("Click on Log in button")
     public void clickLogInButton() {
-        driver.findElement(loginButton).click();
+        driver.findElement(LOGIN_BUTTON).click();
     }
 
-    // Нажать на кнопку Зарегистрироваться
+    @Step("Click on Register button")
     public void clickRegisterButton() {
-        driver.findElement(registerButton).click();
+        driver.findElement(REGISTER_BUTTON).click();
     }
 
-    // Нажать на кнопку Восстановить пароль
+    @Step("Click on Restore The Password button")
     public void clickRestoreThePasswordButton() {
-        driver.findElement(restoreThePasswordButton).click();
+        driver.findElement(RESTORE_THE_PASSWORD_BUTTON).click();
     }
 
-    // Дождаться, пока окно Восстановить пароль загрузится
+    @Step("Wait for Restore The Password Window to load")
     public void waitForRestoreThePasswordWindowToLoad() {
-        wait.until(visibilityOfElementLocated(restoreThePasswordWindow));
+        wait.until(visibilityOfElementLocated(RESTORE_THE_PASSWORD_WINDOW));
     }
 
-    // Нажать на кнопку Войти в окне Восстановить пароль
+    @Step("Click on Sign in button at Restore The Password Window")
     public void clickSignInAtRestoreThePasswordWindowButton() {
-        driver.findElement(signInAtRestoreThePasswordWindowButton).click();
+        driver.findElement(SIGN_IN_AT_RESTORE_THE_PASSWORD_WINDOW_BUTTON).click();
     }
 
-    // Войти шагом
+    @Step("Log in in one step")
     public void login(String email, String password) {
         setEmail(email);
         setPassword(password);
         clickLogInButton();
     }
 
-    // Дождаться, пока главная страница загрузится
+    @Step("Wait for the Main page to load")
     public void waitForMainPageToLoad() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(mainPage));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_PAGE));
     }
 
-    // Дождаться, пока страница профиля загрузится
+    @Step("Wait for the Profile page to load")
     public void waitForProfilePageToLoad() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(profileFormContainer));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PROFILE_FORM_CONTAINER));
     }
 
-    // Получить данные из поля "Имя" в профиле
+    @Step("Get data from Name field in Profile")
     public String getProfileName() {
-        WebElement container = wait.until(ExpectedConditions.visibilityOfElementLocated(profileFormContainer));
-        return container.findElement(profileName).getAttribute("value");
+        WebElement container = wait.until(ExpectedConditions.visibilityOfElementLocated(PROFILE_FORM_CONTAINER));
+        return container.findElement(PROFILE_NAME).getAttribute("value");
     }
 
-    // Получить данные из поля "Email" в профиле
+    @Step("Get data from Email field in Profile")
     public String getProfileEmail() {
-        WebElement container = wait.until(ExpectedConditions.visibilityOfElementLocated(profileFormContainer));
-        return container.findElement(profileEmail).getAttribute("value");
+        WebElement container = wait.until(ExpectedConditions.visibilityOfElementLocated(PROFILE_FORM_CONTAINER));
+        return container.findElement(PROFILE_EMAIL).getAttribute("value");
     }
 
-    // Проверить, успешен ли вход
+    @Step("Check if logging in is successful")
     public boolean checkLoginIsSuccessful() {
         waitForMainPageToLoad();
-        wait.until(ExpectedConditions.elementToBeClickable(myAccountButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(MY_ACCOUNT_BUTTON)).click();
         waitForProfilePageToLoad();
         String actualName = getProfileName();
         String actualEmail = getProfileEmail();
@@ -136,9 +137,9 @@ public class LoginPage {
                 actualEmail != null && !actualEmail.trim().isEmpty();
     }
 
-    // Выйти из личного кабинета
+    @Step("Log out")
     public void clickLogout() {
-        wait.until(ExpectedConditions.elementToBeClickable(logOutButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(LOGOUT_BUTTON)).click();
     }
 
 }

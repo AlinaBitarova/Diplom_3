@@ -1,5 +1,6 @@
 package org.pageobjects;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,63 +14,63 @@ public class MainPage {
     private WebDriverWait wait;
 
     // Кнопка Личный кабинет
-    private static final By myAccountButton = By.xpath(".//p[contains(text(),'Личный Кабинет')]");
+    private static final By MY_ACCOUNT_BUTTON = By.xpath(".//p[contains(text(),'Личный Кабинет')]");
 
     // Кнопка Войти в аккаунт
-    private static final By signInIntoAccountButton = By.xpath(".//button[text()='Войти в аккаунт']");
+    private static final By SIGN_IN_INTO_ACCOUNT_BUTTON = By.xpath(".//button[text()='Войти в аккаунт']");
 
     // Разделы конструктора
-    private static final By bunTabHeader = By.xpath(".//span[text()='Булки']");
-    private static final By sauceTabHeader = By.xpath(".//span[text()='Соусы']");
-    private static final By fillingTabHeader = By.xpath(".//span[text()='Начинки']");
+    private static final By BUN_TAB_HEADER = By.xpath(".//span[text()='Булки']");
+    private static final By SAUCE_TAB_HEADER = By.xpath(".//span[text()='Соусы']");
+    private static final By FILLING_TAB_HEADER = By.xpath(".//span[text()='Начинки']");
 
     // Локаторы родительских контейнеров вкладок (чтобы проверить, что они активны)
-    private static final By bunTabContainer = By.xpath(".//span[text()='Булки']/parent::div");
-    private static final By sauceTabContainer = By.xpath(".//span[text()='Соусы']/parent::div");
-    private static final By fillingTabContainer = By.xpath(".//span[text()='Начинки']/parent::div");
+    private static final By BUN_TAB_CONTAINER = By.xpath(".//span[text()='Булки']/parent::div");
+    private static final By SAUCE_TAB_CONTAINER = By.xpath(".//span[text()='Соусы']/parent::div");
+    private static final By FILLING_TAB_CONTAINER = By.xpath(".//span[text()='Начинки']/parent::div");
 
     public MainPage(WebDriver driver){
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    // Нажать на кнопку Личный кабинет
+    @Step("Click on My Account button")
     public void clickMyAccountButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(myAccountButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(MY_ACCOUNT_BUTTON)).click();
     }
 
-    // Нажать на кнопку Войти в аккаунт
+    @Step("Click on Sign in Into Account button")
     public void clickSignInIntoAccountButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(signInIntoAccountButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(SIGN_IN_INTO_ACCOUNT_BUTTON)).click();
     }
 
-    // Нажать на раздел Булки
+    @Step("Click on Bun tab")
     public void clickBunTabHeader() {
-        wait.until(ExpectedConditions.elementToBeClickable(bunTabHeader)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(BUN_TAB_HEADER)).click();
     }
 
-    // Нажать на раздел Соусы
+    @Step("Click on Sauce tab")
     public void clickSauceTabHeader() {
-        wait.until(ExpectedConditions.elementToBeClickable(sauceTabHeader)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(SAUCE_TAB_HEADER)).click();
     }
 
-    // Нажать на раздел Начинки
+    @Step("Click on Filling tab")
     public void clickFillingTabHeader() {
-        wait.until(ExpectedConditions.elementToBeClickable(fillingTabHeader)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(FILLING_TAB_HEADER)).click();
     }
 
-    // Проверить, что вкладка Булки активна
+    @Step("Check that Bun tab is active")
     public boolean isBunTabActive() {
-        return wait.until(ExpectedConditions.attributeContains(bunTabContainer, "class", "current"));
+        return wait.until(ExpectedConditions.attributeContains(BUN_TAB_CONTAINER, "class", "current"));
     }
 
-    // Проверить, что вкладка Соусы активна
+    @Step("Check that Sauce tab is active")
     public boolean isSauceTabActive() {
-        return wait.until(ExpectedConditions.attributeContains(sauceTabContainer, "class", "current"));
+        return wait.until(ExpectedConditions.attributeContains(SAUCE_TAB_CONTAINER, "class", "current"));
     }
 
-    // Проверить, что вкладка Начинки активна
+    @Step("Check that Filling tab is active")
     public boolean isFillingTabActive() {
-        return wait.until(ExpectedConditions.attributeContains(fillingTabContainer, "class", "current"));
+        return wait.until(ExpectedConditions.attributeContains(FILLING_TAB_CONTAINER, "class", "current"));
     }
 }

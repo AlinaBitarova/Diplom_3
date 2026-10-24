@@ -4,59 +4,18 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.Assert.*;
 
-public class LoginTest {
+public class LoginTest extends BaseTest {
 
-    private WebDriver driver;
-    private MainPage mainPage;
-    private LoginPage loginPage;
-    private RegistrationPage registrationPage;
-    private AdditionalData additionalData;
     private User user;
 
     @Before
-    public void startBrowser() {
-        additionalData = new AdditionalData();
+    public void initialSetUp() {
         user = additionalData.getRandomUser();
         additionalData.createUser(user);
-
-        String browser = System.getProperty("browser", "chrome"); // "chrome" — значение по умолчанию
-
-        if (browser.equalsIgnoreCase("chrome")) {
-            startBrowserChrome();
-        } else if (browser.equalsIgnoreCase("yandex")) {
-            startBrowserYandex();
-        }
-    }
-
-    public void startBrowserChrome() {
-        io.github.bonigarcia.wdm.WebDriverManager.chromedriver().clearDriverCache();
-        io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        initialSetUp();
-    }
-
-    public void startBrowserYandex() {
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary("C:\\Program Files\\Yandex\\YandexBrowser\\Application\\browser.exe");
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        initialSetUp();
-    }
-
-    public void initialSetUp() {
-        driver.manage().window().maximize();
         driver.get("https://qa-stellarburgers.education-services.ru");
-        mainPage = new MainPage(driver);
-        loginPage = new LoginPage(driver);
-        registrationPage = new RegistrationPage(driver);
     }
 
     @Test
@@ -104,14 +63,9 @@ public class LoginTest {
     }
 
     @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-
+    public void cleanData() {
         if (user != null) {
             additionalData.deleteUser(user);
         }
     }
-
 }

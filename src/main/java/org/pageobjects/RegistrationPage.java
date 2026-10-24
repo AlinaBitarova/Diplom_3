@@ -1,5 +1,6 @@
 package org.pageobjects;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,61 +17,61 @@ public class RegistrationPage {
     private WebDriverWait wait;
 
     //  Локатор формы регистрации
-    private static final By registrationForm = By.xpath("//div[contains(@class, 'Auth_login') and .//h2[text()='Регистрация']]");
+    private static final By REGISTRATION_FORM = By.xpath("//div[contains(@class, 'Auth_login') and .//h2[text()='Регистрация']]");
 
     // Поля регистрации
-    private static final By nameField = By.xpath(".//label[text()='Имя']/following-sibling::input");
-    private static final By emailField = By.xpath(".//label[text()='Email']/following-sibling::input");
-    private static final By passwordField = By.xpath(".//label[text()='Пароль']/following-sibling::input");
+    private static final By NAME_FIELD = By.xpath(".//label[text()='Имя']/following-sibling::input");
+    private static final By EMAIL_FIELD = By.xpath(".//label[text()='Email']/following-sibling::input");
+    private static final By PASSWORD_FIELD = By.xpath(".//label[text()='Пароль']/following-sibling::input");
 
     // Локатор ошибки некорректного пароля
-    private static final By passwordErrorLabel = By.xpath(".//p[contains(@class, 'input__error') and text()='Некорректный пароль']");
+    private static final By PASSWORD_ERROR_LABEL = By.xpath(".//p[contains(@class, 'input__error') and text()='Некорректный пароль']");
 
     // Кнопка Зарегистрироваться
-    private static final By registerButton = By.xpath(".//button[text()='Зарегистрироваться']");
+    private static final By REGISTER_BUTTON = By.xpath(".//button[text()='Зарегистрироваться']");
 
     // Кнопка Войти
-    private static final By signInButton = By.xpath(".//*[text()='Войти']");
+    private static final By SIGN_IN_BUTTON = By.xpath(".//*[text()='Войти']");
 
     //  Локатор формы Вход
-    private static final By loginForm = By.xpath("//div[contains(@class, 'Auth_login') and .//h2[text()='Вход']]");
+    private static final By LOGIN_FORM = By.xpath("//div[contains(@class, 'Auth_login') and .//h2[text()='Вход']]");
 
     public RegistrationPage(WebDriver driver){
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    // Дождаться, пока страница загрузится
+    @Step("Wait for Registration page to load")
     public void waitForRegistrationPageToLoad() {
-        wait.until(visibilityOfElementLocated(registrationForm));
+        wait.until(visibilityOfElementLocated(REGISTRATION_FORM));
     }
 
-    // Ввести данные в поле Имя
+    @Step("Fill Name field")
     public void setName(String name) {
-        driver.findElement(nameField).sendKeys(name);
+        driver.findElement(NAME_FIELD).sendKeys(name);
     }
 
-    // Ввести данные в поле Email
+    @Step("Fill Email field")
     public void setEmail(String email) {
-        driver.findElement(emailField).sendKeys(email);
+        driver.findElement(EMAIL_FIELD).sendKeys(email);
     }
 
-    // Ввести данные в поле Пароль
+    @Step("Fill Password field")
     public void setPassword(String password) {
-        driver.findElement(passwordField).sendKeys(password);
+        driver.findElement(PASSWORD_FIELD).sendKeys(password);
     }
 
-    // Нажать на кнопку Зарегистрироваться
+    @Step("Click on Register button")
     public void clickRegisterButton() {
-        driver.findElement(registerButton).click();
+        driver.findElement(REGISTER_BUTTON).click();
     }
 
-    // Нажать на кнопку Войти
+    @Step("Click on Sign in button")
     public void clickSignInButton() {
-        driver.findElement(signInButton).click();
+        driver.findElement(SIGN_IN_BUTTON).click();
     }
 
-    // Зарегистрироваться шагом
+    @Step("Register in one step")
     public void register(String name, String email, String password) {
         setName(name);
         setEmail(email);
@@ -78,15 +79,15 @@ public class RegistrationPage {
         clickRegisterButton();
     }
 
-    // Проверить, успешна ли регистрация
+    @Step("Check if registration is successful")
     public boolean checkRegistrationIsSuccessful() {
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(loginForm));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_FORM));
         return element.isDisplayed();
     }
 
-    // Проверить, отображается ли ошибка "Некорректный пароль", если пароль короткий
+    @Step("Check if error message is displayed when password is too short")
     public boolean isPasswordErrorDisplayed() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(passwordErrorLabel)).isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD_ERROR_LABEL)).isDisplayed();
     }
 
 }

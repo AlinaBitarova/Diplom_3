@@ -42,19 +42,11 @@ public class AdditionalData {
     }
 
     @Step("Sending POST request to login")
-    public Response loginUser(Object credentials) {
+    public Response loginUser(User user) {
         return given()
                 .spec(getRequestSpec())
-                .body(credentials)
+                .body(user)
                 .post(USER_LOGIN_PATH);
-    }
-
-    @Step("Sending POST request to login with User")
-    public Response loginUser(User user) {
-        return loginUser(Map.of(
-                "email", user.getEmail(),
-                "password", user.getPassword()
-        ));
     }
 
     @Step("Creating a valid user via Faker")
